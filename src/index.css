@@ -41,14 +41,12 @@ h6 {
 
 img {
   width: 100%;
-  object-fit: cover;
+  padding: 1rem;
+  object-fit: contain;
   border: 1px solid black;
   min-height: 20rem;
 }
 
-pre {
-  padding: 1rem;
-}
 
 ul>li {
   margin-left: 0.5rem;
@@ -78,4 +76,18 @@ blockquote {
   margin: 0 1rem;
   background-color: #00000077;
   border-left: 4px solid black;
+}
+
+pre {
+  width: 100%;
+  padding: 2rem;
+  background-color: #f5deb355;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: clip;
 }
