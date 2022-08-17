@@ -1,7 +1,6 @@
 import styled from "styled-components"
-import React, { useState } from "react"
+import React from "react"
 import { Markdown, Eraser } from 'tabler-icons-react';
-import { defaultEditorText } from "./utils/constants"
 
 const Container = styled.div`
     padding:2rem;
@@ -49,29 +48,11 @@ const StyledEditor = styled.textarea`
   min-height: 90vh;
 `
 
-const previewWorker = new Worker(new URL("./markdownPreviewWorker.js", import.meta.url), {
-    type: "module"
-});
+function Editor({ editorValue, onEditorChange, clearContent }) {
 
-
-function Editor({ setPreview }) {
-
-    const [editorValue, setEditorValue] = useState(defaultEditorText)
-
-    function onEditorChange(event) {
-        const { value } = event.target
-        previewWorker.postMessage(value)
-        setEditorValue(value)
-    }
-
-    function clearContent() {
-        setEditorValue("")
-        previewWorker.postMessage(" ")
-    }
-
-    previewWorker.onmessage = function onMessage({ data }) {
-        setPreview(data);
-    }
+    console.log({
+        editorValue
+    })
 
     return <Container>
         <Text>
@@ -81,4 +62,4 @@ function Editor({ setPreview }) {
     </Container>
 }
 
-export default React.memo(Editor)
+export default Editor

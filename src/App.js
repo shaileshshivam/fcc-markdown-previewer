@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import Editor from "./Editor";
 import Preview from "./Preview";
+import { defaultEditorText } from "./utils/constants";
 
 const Container = styled.div`
   padding:1rem;
@@ -11,16 +12,23 @@ const Container = styled.div`
   gap: 1rem;
 `
 
-
-
 function App() {
 
-  const [preview, setPreview] = useState("")
+  const [editorValue, setEditorValue] = useState(defaultEditorText)
+
+  function onEditorChange(event) {
+    const { value } = event.target
+    setEditorValue(value);
+  }
+
+  function clearContent() {
+    setEditorValue("")
+  }
 
   return (
     <Container>
-      <Editor setPreview={setPreview} />
-      <Preview preview={preview} />
+      <Editor editorValue={editorValue} onEditorChange={onEditorChange} clearContent={clearContent} />
+      <Preview preview={editorValue} />
     </Container>
   );
 }

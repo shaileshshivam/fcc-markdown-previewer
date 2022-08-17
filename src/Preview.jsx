@@ -2,8 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Presentation } from 'tabler-icons-react';
 import "highlight.js/styles/github.css";
-
-import { defaultMarkup } from "./utils/constants";
+import { sanitizeAndParse } from "./utils/sanitizeAndParse";
 
 
 const StyledPreview = styled.section`
@@ -26,7 +25,7 @@ const Text = styled.h2`
 `
 
 const Container = styled.div`
-    background-color:#fffc12;
+    background-color: #e3f5e4;
     border-radius:0.25rem;
     padding:2rem;
     min-height:100vh;
@@ -39,12 +38,10 @@ const Container = styled.div`
 
 export default function Preview({ preview }) {
 
-    const markup = preview.length === 0 ? defaultMarkup : preview
-
-    console.log(markup)
+    console.log({ preview })
 
     return <Container>
         <Text><Presentation size={32} /> Preview</Text>
-        <StyledPreview id="preview" dangerouslySetInnerHTML={{ __html: markup }} />
+        <StyledPreview id="preview" dangerouslySetInnerHTML={{ __html: sanitizeAndParse(preview) }} />
     </Container>
 }
