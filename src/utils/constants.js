@@ -1,3 +1,5 @@
+import { sanitizeAndParse } from "./sanitizeAndParse"
+
 export const defaultEditorText = `
 # Welcome to my React Markdown Previewer!
 
@@ -16,9 +18,9 @@ function anotherExample(firstLine, lastLine) {
 }
 \`\`\`
 
-You can also make text ** bold **...whoa!  
+You can also make text **bold** ... whoa!  
 Or _italic_.  
-Or... wait for it... ** _both!_ **   
+Or ... wait for it ... **_both!_**   
 And feel free to go crazy ~~crossing stuff out~~.  
 
 There's also [links](https://www.freecodecamp.org), and
@@ -42,5 +44,6 @@ And here. | Okay. | I think we get it.
 1. And last but not least, let's not forget embedded images:
 
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
-
 `
+
+export const defaultMarkup = sanitizeAndParse(defaultEditorText)

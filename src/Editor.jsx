@@ -1,6 +1,7 @@
 import styled from "styled-components"
-import React, { useRef, useState } from "react"
-import { defaultEditorText } from "./constants"
+import React, { useState } from "react"
+import { Markdown, Eraser } from 'tabler-icons-react';
+import { defaultEditorText } from "./utils/constants"
 
 const Container = styled.div`
     padding:2rem;
@@ -8,7 +9,7 @@ const Container = styled.div`
     background-color:whitesmoke;
     display:grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 10fr;
+    grid-template-rows: 4rem 10fr;
     border-radius:0.25rem;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 `
@@ -17,20 +18,38 @@ const Text = styled.h2`
     font-size: 1.4rem;
     align-self:center;
     border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+`
+
+const EraseButton = styled.button`
+    border:none;
+    outline:none;
+    min-width:3rem;
+    background:none;
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+
+    :active {
+        transform:scale(0.95) translate(-5px) translate(1px) translate(-5px);
+        transition: transform 0.2s ease-in-out;
+    }
 `
 
 const StyledEditor = styled.textarea`
   width:100%;
   outline:none;
-  font-size:1.1rem;
+  font-size:0.9rem;
   border:none;
   padding:1rem;
   background:none;
   resize: none;
-  font-family: 'Roboto', sans-serif;
+  min-height: 90vh;
 `
 
-const previewWorker = new Worker(new URL("./markdown-preview-worker.js", import.meta.url), {
+const previewWorker = new Worker(new URL("./markdownPreviewWorker.js", import.meta.url), {
     type: "module"
 });
 
@@ -45,13 +64,20 @@ function Editor({ setPreview }) {
         setEditorValue(value)
     }
 
+    function clearContent() {
+        setEditorValue("")
+        previewWorker.postMessage(" ")
+    }
+
     previewWorker.onmessage = function onMessage({ data }) {
         setPreview(data);
     }
 
     return <Container>
-        <Text>Markdown</Text>
-        <StyledEditor onChange={onEditorChange} value={editorValue} />
+        <Text>
+            <Markdown size={32} /> Markdown <EraseButton onClick={clearContent}><Eraser size={24} /></EraseButton>
+        </Text>
+        <StyledEditor id="editor" onChange={onEditorChange} value={editorValue} />
     </Container>
 }
 
